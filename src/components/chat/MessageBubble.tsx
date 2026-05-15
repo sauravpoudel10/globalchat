@@ -77,8 +77,12 @@ export function MessageBubble({
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline gap-2">
           <span className="font-semibold text-sm">@{message.username}</span>
-          <span className="text-xs text-muted-foreground" title={new Date(message.created_at).toLocaleString()}>
-            {message.pending ? "sending…" : relativeTime(message.created_at) || (now, "")}
+          <span
+            className="text-xs text-muted-foreground"
+            title={new Date(message.created_at).toLocaleString()}
+            data-tick={now}
+          >
+            {message.pending ? "sending…" : relativeTime(message.created_at)}
           </span>
           {isOwn && (
             <button
