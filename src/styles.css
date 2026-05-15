@@ -78,16 +78,22 @@
 }
 
 @layer base {
-  * { border-color: var(--color-border); }
-  html, body {
-    background: radial-gradient(1200px 800px at 80% -10%, oklch(0.27 0.07 285 / 0.18), transparent 60%),
-                radial-gradient(900px 700px at -10% 100%, oklch(0.3 0.1 152 / 0.18), transparent 55%),
-                var(--color-background);
+  * {
+    border-color: var(--color-border);
+  }
+  html,
+  body {
+    background:
+      radial-gradient(1200px 800px at 80% -10%, oklch(0.27 0.07 285 / 0.18), transparent 60%),
+      radial-gradient(900px 700px at -10% 100%, oklch(0.3 0.1 152 / 0.18), transparent 55%),
+      var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  ::selection { background: oklch(0.62 0.22 285 / 0.4); }
+  ::selection {
+    background: oklch(0.62 0.22 285 / 0.4);
+  }
 }
 
 @layer utilities {
@@ -104,25 +110,145 @@
     background: color-mix(in oklab, var(--color-surface) 80%, transparent);
     backdrop-filter: blur(14px);
   }
-  .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
   .scrollbar-thin::-webkit-scrollbar-thumb {
     background: color-mix(in oklab, var(--color-foreground) 12%, transparent);
     border-radius: 8px;
   }
-  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
   @keyframes msgIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  .animate-msg-in { animation: msgIn 220ms ease-out both; }
+  .animate-msg-in {
+    animation: msgIn 220ms ease-out both;
+  }
+  @keyframes worldPulse {
+    0%,
+    100% {
+      opacity: 0.48;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.85;
+      transform: scale(1.045);
+    }
+  }
+  .animate-world-pulse {
+    animation: worldPulse 4.8s ease-in-out infinite;
+  }
+  @keyframes orbitRing {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: rotate(1deg) scale(1.025);
+    }
+  }
+  .animate-orbit-ring {
+    animation: orbitRing 8s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes worldLinkFlow {
+    from {
+      stroke-dashoffset: 120;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .world-link {
+    fill: none;
+    stroke: color-mix(in oklab, var(--color-primary) 72%, transparent);
+    stroke-dasharray: 8 14;
+    stroke-linecap: round;
+    stroke-width: 2;
+    filter: drop-shadow(0 0 8px color-mix(in oklab, var(--color-primary) 55%, transparent));
+    animation: worldLinkFlow 4.8s linear infinite;
+  }
+  .world-link-2,
+  .world-link-5 {
+    stroke: color-mix(in oklab, var(--color-secondary) 70%, transparent);
+    animation-duration: 6.2s;
+  }
+  .world-link-3 {
+    animation-duration: 5.6s;
+    animation-direction: reverse;
+  }
+  @keyframes worldNodePulse {
+    0%,
+    100% {
+      opacity: 0.45;
+      transform: scale(0.9);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.6);
+    }
+  }
+  .world-node {
+    fill: var(--color-primary);
+    transform-box: fill-box;
+    transform-origin: center;
+    filter: drop-shadow(0 0 10px var(--color-primary));
+    animation: worldNodePulse 2.4s ease-in-out infinite;
+  }
+  @keyframes chatFloat {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-12px) rotate(0.4deg);
+    }
+  }
+  .animate-chat-float {
+    animation: chatFloat 5.5s ease-in-out infinite;
+  }
+  .animation-delay-2 {
+    animation-delay: -1.8s;
+  }
+  .animation-delay-4 {
+    animation-delay: -3.4s;
+  }
   @keyframes flashHl {
-    0%   { background-color: color-mix(in oklab, var(--color-primary) 30%, transparent); }
-    100% { background-color: transparent; }
+    0% {
+      background-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
+    }
+    100% {
+      background-color: transparent;
+    }
   }
-  .animate-flash { animation: flashHl 1.6s ease-out both; }
+  .animate-flash {
+    animation: flashHl 1.6s ease-out both;
+  }
   @keyframes typingDot {
-    0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
-    30% { opacity: 1; transform: translateY(-2px); }
+    0%,
+    60%,
+    100% {
+      opacity: 0.25;
+      transform: translateY(0);
+    }
+    30% {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
   }
-  .typing-dot { animation: typingDot 1.2s infinite; }
+  .typing-dot {
+    animation: typingDot 1.2s infinite;
+  }
 }

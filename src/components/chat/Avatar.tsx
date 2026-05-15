@@ -1,3 +1,5 @@
+import { UserRound } from "lucide-react";
+
 type Props = {
   url?: string | null;
   name: string;
@@ -6,17 +8,9 @@ type Props = {
 };
 
 export function Avatar({ url, name, size = 36, online }: Props) {
-  const initials = name
-    .replace(/[^a-zA-Z0-9 ]/g, "")
-    .split(/[\s_]+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((p) => p[0]?.toUpperCase())
-    .join("") || "?";
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
       {url ? (
-        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={url}
           alt=""
@@ -24,10 +18,8 @@ export function Avatar({ url, name, size = 36, online }: Props) {
           className="rounded-full object-cover w-full h-full ring-1 ring-border"
         />
       ) : (
-        <div
-          className="rounded-full grid place-items-center text-xs font-semibold gradient-brand text-primary-foreground w-full h-full"
-        >
-          {initials}
+        <div className="grid h-full w-full place-items-center rounded-full gradient-brand text-primary-foreground ring-1 ring-border">
+          <UserRound aria-hidden className="h-[58%] w-[58%]" strokeWidth={2.2} />
         </div>
       )}
       {online && (

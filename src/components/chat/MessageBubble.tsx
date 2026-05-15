@@ -7,11 +7,13 @@ import { supabase } from "@/integrations/supabase/client";
 
 export type Message = {
   id: string;
+  room_id: string;
   user_id: string;
   username: string;
   avatar_url: string | null;
   text: string;
   mentions: string[];
+  is_anonymous: boolean;
   pdf_url: string | null;
   pdf_name: string | null;
   pdf_size: number | null;
@@ -37,6 +39,9 @@ export function MessageBubble({
   flashed,
 }: Props) {
   const isOwn = message.user_id === ownUserId;
+  const isAnonymous = message.is_anonymous;
+  const displayName = isAnonymous ? "anonymous" : message.username;
+  const displayAvatar = isAnonymous ? null : message.avatar_url;
   const [now, setNow] = useState(0);
   useEffect(() => {
     const t = setInterval(() => setNow((n) => n + 1), 30000);
@@ -63,20 +68,27 @@ export function MessageBubble({
   return (
     <div
       data-msg-id={message.id}
-      data-username={message.username}
+      data-username={displayName}
       className={`group flex gap-3 px-4 py-2 animate-msg-in rounded-xl ${
         flashed ? "animate-flash" : ""
       }`}
       ref={ref}
     >
       <Avatar
-        url={message.avatar_url}
-        name={message.username}
-        online={onlineUsernames.has(message.username)}
+        url={displayAvatar}
+        name={displayName}
+        online={!isAnonymous && onlineUsernames.has(message.username)}
       />
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline gap-2">
-          <span className="font-semibold text-sm">@{message.username}</span>
+          <span className="font-semibold text-sm">
+            {isAnonymous ? "Anonymous" : `@${message.username}`}
+          </span>
+          {isAnonymous && isOwn && (
+            <span className="rounded-md bg-foreground/10 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+              you
+            </span>
+          )}
           <span
             className="text-xs text-muted-foreground"
             title={new Date(message.created_at).toLocaleString()}

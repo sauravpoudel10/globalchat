@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 
+import faviconUrl from "@/assets/globe-favicon.svg";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -74,14 +75,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "WorldChat" },
       { name: "description", content: "One global real-time chat room." },
+      { name: "application-name", content: "WorldChat" },
       { name: "author", content: "WorldChat" },
       { property: "og:title", content: "WorldChat" },
       { property: "og:description", content: "One global real-time chat room." },
+      { property: "og:site_name", content: "WorldChat" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "theme-color", content: "#10231d" },
     ],
     links: [
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: faviconUrl,
+      },
+      {
+        rel: "shortcut icon",
+        href: faviconUrl,
+      },
       {
         rel: "stylesheet",
         href: appCss,

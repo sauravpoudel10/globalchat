@@ -12,6 +12,15 @@ alter table public.profiles enable row level security;
 create policy "Profiles readable by authenticated users"
   on public.profiles for select to authenticated using (true);
 
+create policy "Users insert own profile"
+  on public.profiles for insert to authenticated
+  with check (auth.uid() = id);
+
+create policy "Users update own profile"
+  on public.profiles for update to authenticated
+  using (auth.uid() = id)
+  with check (auth.uid() = id);
+
 -- MESSAGES
 create table public.messages (
   id uuid primary key default gen_random_uuid(),
