@@ -1,26 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useAuth } from "@/hooks/use-auth";
+import { LoginCard } from "@/components/chat/LoginCard";
+import { ChatRoom } from "@/components/chat/ChatRoom";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "WorldChat — one global room" },
+      { name: "description", content: "A single global, real-time chat room. Sign in with Google and join the conversation." },
+      { property: "og:title", content: "WorldChat — one global room" },
+      { property: "og:description", content: "A single global, real-time chat room. Sign in with Google and join." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  const { user, profile, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-sm text-muted-foreground">Loading…</div>
+      </div>
+    );
+  }
+
+  if (!user) return <LoginCard />;
+
+  if (!profile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-sm text-muted-foreground">Setting up your profile…</div>
+      </div>
+    );
+  }
+
+  return <ChatRoom profile={profile} />;
 }
